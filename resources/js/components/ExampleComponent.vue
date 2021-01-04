@@ -13,13 +13,15 @@
         </div>
       </div>
     </div>
+    <Fullcalendar></Fullcalendar>
   </div>
 </template>
 
 <script>
+import Fullcalendar from "./Fullcalendar";
 export default {
-  mounted() {
-    console.log("Component mounted.");
+  components: {
+    Fullcalendar,
   },
 };
 </script>
