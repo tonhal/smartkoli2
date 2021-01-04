@@ -24,7 +24,10 @@
     </form>
 
     <div id="app">
-        <example-component></example-component>
+        <router-link to="/">Home</router-link>
+        <router-link to="/laundries">Mosások</router-link>
+
+        <router-view></router-view>
     </div>
 </body>
 </html>

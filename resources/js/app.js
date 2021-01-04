@@ -1,9 +1,7 @@
 import './bootstrap';
-import ExampleComponent from './components/ExampleComponent'
+import router from './routes'
 
 const app = new Vue({
-    components: {
-        ExampleComponent
-    },
     el: '#app',
+    router
 });
