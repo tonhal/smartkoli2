@@ -10903,3 +10903,17 @@ a.text-dark:focus {
   }
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.router-link-exact-active {
+  border-bottom: 3px solid #167fff;
+}
+
