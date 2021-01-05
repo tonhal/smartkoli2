@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Laundry;
+
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -36,4 +39,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the laundries of this user
+     */
+    public function laundries() {
+        
+        return $this->hasMany('Laundry');
+
+    }
 }
