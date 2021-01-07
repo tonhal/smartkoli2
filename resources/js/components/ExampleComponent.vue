@@ -13,15 +13,9 @@
         </div>
       </div>
     </div>
-    <Fullcalendar></Fullcalendar>
   </div>
 </template>
 
 <script>
-import Fullcalendar from "./Fullcalendar";
-export default {
-  components: {
-    Fullcalendar,
-  },
-};
+export default {};
 </script>
