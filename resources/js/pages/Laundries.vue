@@ -100,20 +100,31 @@ export default {
         },
 
         addNewLaundry() {
-            console.log("belemegy");
-            this.events.push({
-                id: this.id,
-                title: "Ez a user",
-                start: `${this.form.date} ${this.form.start}`,
-                end: `${this.form.date} ${this.form.end}`,
-            });
+            axios
+                .post("/laundries", { ...this.form })
+                .then((response) => {
+                    this.events.push(response.data);
 
-            this.id++;
+                    this.showToast(
+                        "success",
+                        "Mosás hozzáadva!",
+                        "A mosásod hozzáadása sikeres volt."
+                    );
 
-            this.showToast(
-                "success",
-                "Mosás hozzáadva!",
-                "A mosásod hozzáadása sikeres volt."
+                    this.resetForm();
+                })
+                .catch((error) => {
+                    this.showToast(
+                        "danger",
+                        "Hiba a mosás hozzáadása közben.",
+                        error.response.data.msg
+                    );
+                });
+        },
+
+        resetForm() {
+            Object.keys(this.form).forEach(
+                (field) => (this.form[field] = null)
             );
         },
     },

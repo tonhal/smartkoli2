@@ -6,6 +6,7 @@ export default {
                 variant: variant,
                 solid: true,
                 autoHideDelay: 3000,
+                //toaster: 'b-toaster-bottom-left',
             })
         }
     }
