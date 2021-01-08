@@ -17,11 +17,7 @@ class LaundryController extends Controller
 
     public function index() {
 
-        $laundries = DB::table('laundries')
-            ->join('users', 'laundries.user_id', '=', 'users.id')
-            ->select('laundries.id','users.name as title','laundries.start','laundries.end')
-            ->get()
-            ->toJson();
+        $laundries = Laundry::with('user')->get()->toJson(JSON_PRETTY_PRINT);
 
         return $laundries;
 
@@ -60,7 +56,14 @@ class LaundryController extends Controller
             'title' => auth()->user()->name,
             'start' => $laundry->start,
             'end' => $laundry->end,
+            'userId' => auth()->id()
         ]);
+
+    }
+
+    public function destroy($id) {
+
+        Laundry::destroy($id);
 
     }
 }

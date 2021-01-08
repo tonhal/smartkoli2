@@ -48,7 +48,25 @@
                 </b-card>
             </div>
             <div class="col-md-6">
-                <b-card header="Közelgő mosásaim" header-tag="h5"> asd </b-card>
+                <b-card header="Közelgő mosásaim" header-tag="h5">
+                    <table class="table table-hover table-centered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Eleje</th>
+                                <th scope="col">Vége</th>
+                                <th scope="col">Törlés</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <LaundryTableRow
+                                v-for="laundry in userLaundries"
+                                :key="laundry.id"
+                                :laundry="laundry"
+                                @laundryDelete="deleteLaundry"
+                            ></LaundryTableRow>
+                        </tbody>
+                    </table>
+                </b-card>
             </div>
         </div>
         <div class="row mt-3">
@@ -70,11 +88,15 @@
 </template>
 <script>
 import LaundryCalendar from "../components/LaundryCalendar";
+import LaundryTableRow from "../components/LaundryTableRow";
 import showToast from "../mixins/showToast";
 export default {
     components: {
         LaundryCalendar,
+        LaundryTableRow,
     },
+
+    props: ["userId"],
 
     mixins: [showToast],
 
@@ -87,7 +109,6 @@ export default {
                 start: null,
                 end: null,
             },
-            id: 2,
         };
     },
 
@@ -95,7 +116,9 @@ export default {
         async fetchLaundries() {
             const response = await axios.get("/laundries");
 
-            this.events = response.data;
+            this.events = response.data.map(({ id, start, end, user }) => {
+                return { id, start, end, title: user.name, userId: user.id };
+            });
             this.eventsLoaded = true;
         },
 
@@ -122,9 +145,32 @@ export default {
                 });
         },
 
+        async deleteLaundry(laundryId) {
+            await axios.delete(`laundries/${laundryId}`);
+
+            this.events.splice(
+                this.events.findIndex((laundry) => laundry.id === laundryId),
+                1
+            );
+
+            this.showToast(
+                "success",
+                "Mosás törölve!",
+                "A mosásod törlése sikeres volt."
+            );
+        },
+
         resetForm() {
             Object.keys(this.form).forEach(
                 (field) => (this.form[field] = null)
+            );
+        },
+    },
+
+    computed: {
+        userLaundries() {
+            return this.events.filter(
+                (laundry) => laundry.userId === this.userId
             );
         },
     },
@@ -134,3 +180,7 @@ export default {
     },
 };
 </script>
+<style lang="sass">
+.table td, .table th
+    text-align: center
+</style>

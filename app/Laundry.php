@@ -9,16 +9,21 @@ use DB;
 class Laundry extends Model
 {
     /**
+     * Hides timestamp fields from laundry query results
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
+    /**
      * Get the user of this laundry
      */
     public function user() {
 
-        $this->belongsTo('User');
+        return $this->belongsTo('App\User');
 
     }
 
     /**
-     * Check whether the laundry overlaps with another laundry.
+     * Check whether the laundry overlaps with another laundry
      */
     public function isOverlapping() {
 

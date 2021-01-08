@@ -19,4 +19,4 @@ Auth::routes();
 
 Route::get('/laundries', 'LaundryController@index');
 Route::post('/laundries', 'LaundryController@store');
-
+Route::delete('/laundries/{id}', 'LaundryController@destroy');
