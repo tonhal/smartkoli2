@@ -1,16 +1,18 @@
 // Fonts
 //@import url('https://fonts.googleapis.com/css?family=Nunito');
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
 
 // Variables
 @import 'variables';
 
 // Default font
-$font-family-base: 'Lato', sans-serif;
+$font-family-base: 'Poppins', sans-serif;
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/dist/bootstrap-vue.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
 
 // Router-view fade
 .fade-enter-active, .fade-leave-active {
@@ -26,5 +28,10 @@ $font-family-base: 'Lato', sans-serif;
 
     //font-weight: bold !important;
     border-bottom: 3px solid #167fff;
+}
+
+// Icon spacing 
+.icon {
+    margin-right: 0.5em;
 }
 

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 mb-md-0 mb-3">
-                <b-card header="Új mosás" header-tag="h5">
+                <b-card header="Új mosás" header-tag="h4">
                     <form @submit.prevent="addNewLaundry()">
                         <label for="laundry-date">Állítsd be a dátumot:</label>
                         <b-form-datepicker
@@ -48,7 +48,7 @@
                 </b-card>
             </div>
             <div class="col-md-6">
-                <b-card header="Közelgő mosásaim" header-tag="h5">
+                <b-card header="Közelgő mosásaim" header-tag="h4">
                     <table class="table table-hover table-centered">
                         <thead>
                             <tr>
