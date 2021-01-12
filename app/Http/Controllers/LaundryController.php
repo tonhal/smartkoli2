@@ -63,7 +63,15 @@ class LaundryController extends Controller
 
     public function destroy($id) {
 
-        Laundry::destroy($id);
+        $laundry = Laundry::find($id); 
 
+        if($laundry->user_id == auth()->id()) {
+            Laundry::destroy($id);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'Nincs jogosultságod ennek a mosásnak a törlésére.'
+            ], 403);
+        }
     }
 }

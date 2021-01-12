@@ -124,19 +124,30 @@ export default {
                 });
         },
 
-        async deleteLaundry(laundryId) {
-            await axios.delete(`laundries/${laundryId}`);
+        deleteLaundry(laundryId) {
+            axios
+                .delete(`laundries/${laundryId}`)
+                .then(() => {
+                    this.events.splice(
+                        this.events.findIndex(
+                            (laundry) => laundry.id === laundryId
+                        ),
+                        1
+                    );
 
-            this.events.splice(
-                this.events.findIndex((laundry) => laundry.id === laundryId),
-                1
-            );
-
-            this.showToast(
-                "success",
-                "Mosás törölve!",
-                "A mosásod törlése sikeres volt."
-            );
+                    this.showToast(
+                        "success",
+                        "Mosás törölve!",
+                        "A mosásod törlése sikeres volt."
+                    );
+                })
+                .catch((error) => {
+                    this.showToast(
+                        "danger",
+                        "Hiba a mosás törlése közben.",
+                        error.response.data.msg
+                    );
+                });
         },
     },
 
