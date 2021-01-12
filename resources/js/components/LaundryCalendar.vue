@@ -45,7 +45,7 @@ export default {
 
     watch: {
         calendarEvents() {
-            this.calendarOptions.events = this.calendarEvents;
+            this.calendarOptions.events = [...this.calendarEvents];
         },
     },
 };

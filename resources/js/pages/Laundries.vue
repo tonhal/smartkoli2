@@ -24,6 +24,7 @@
                                 <label for="laundry-start">Mosás kezdete:</label
                                 ><br />
                                 <b-time
+                                    class="border rounded p-2"
                                     id="laundry-start"
                                     v-model="form.start"
                                     locale="hu"
@@ -34,6 +35,7 @@
                                 <label for="laundry-end">Mosás vége:</label
                                 ><br />
                                 <b-time
+                                    class="border rounded p-2"
                                     id="laundry-end"
                                     v-model="form.end"
                                     locale="hu"
@@ -49,9 +51,12 @@
             </div>
             <div class="col-md-6">
                 <b-card header="Közelgő mosásaim" header-tag="h4">
-                    <table class="table table-hover table-centered">
+                    <table
+                        class="table table-hover table-centered table-striped"
+                    >
                         <thead>
                             <tr>
+                                <th scope="col">Nap</th>
                                 <th scope="col">Eleje</th>
                                 <th scope="col">Vége</th>
                                 <th scope="col">Törlés</th>
@@ -90,6 +95,8 @@
 import LaundryCalendar from "../components/LaundryCalendar";
 import LaundryTableRow from "../components/LaundryTableRow";
 import showToast from "../mixins/showToast";
+import moment from "moment";
+
 export default {
     components: {
         LaundryCalendar,
@@ -160,6 +167,13 @@ export default {
             );
         },
 
+        setDefaultTimes() {
+            const now = moment();
+            this.form.date = now.format("YYYY-MM-DD");
+            this.form.start = `${now.clone().add(1, "hours").format("HH")}:00`;
+            this.form.end = `${now.clone().add(2, "hours").format("HH")}:00`;
+        },
+
         resetForm() {
             Object.keys(this.form).forEach(
                 (field) => (this.form[field] = null)
@@ -177,6 +191,7 @@ export default {
 
     mounted() {
         this.fetchLaundries();
+        this.setDefaultTimes();
     },
 };
 </script>

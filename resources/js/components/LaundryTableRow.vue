@@ -1,8 +1,9 @@
 <template>
     <tr>
         <template v-if="!deleteConfirm">
-            <td>{{ laundry.start }}</td>
-            <td>{{ laundry.end }}</td>
+            <td id="day-cell">{{ formatDay(laundry.start) }}</td>
+            <td>{{ formatTime(laundry.start) }}</td>
+            <td>{{ formatTime(laundry.end) }}</td>
             <td>
                 <b-button
                     variant="danger"
@@ -14,18 +15,19 @@
         </template>
         <template v-else>
             <td colspan="2">Biztosan törölni akarod ezt a mosást?</td>
-            <td>
-                <b-button size="sm" @click="deleteConfirm = false"
-                    >Cancel</b-button
-                >
+            <td colspan="2">
                 <b-button variant="danger" size="sm" @click="confirmDelete"
                     >Törlés</b-button
+                >
+                <b-button size="sm" @click="deleteConfirm = false"
+                    >Cancel</b-button
                 >
             </td>
         </template>
     </tr>
 </template>
 <script>
+import moment from "moment";
 export default {
     props: ["laundry"],
     data() {
@@ -37,6 +39,19 @@ export default {
         confirmDelete() {
             this.$emit("laundryDelete", this.laundry.id);
         },
+
+        formatDay(day) {
+            return moment(day).locale("hu").format("MMMM DD. dddd");
+        },
+
+        formatTime(time) {
+            console.log(time);
+            return moment(time).format("HH:mm");
+        },
     },
 };
 </script>
+<style lang="sass" scoped>
+#day-cell
+    font-weight: bold
+</style>
