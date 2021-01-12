@@ -10,7 +10,7 @@
                 </b-card>
             </div>
             <div class="col-md-6">
-                <b-card header="Közelgő mosásaim" header-tag="h4">
+                <b-card header="Közelgő mosásaim" header-tag="h4" class="h-100">
                     <table
                         class="table table-hover table-centered table-striped"
                     >

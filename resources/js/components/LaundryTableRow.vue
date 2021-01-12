@@ -45,7 +45,6 @@ export default {
         },
 
         formatTime(time) {
-            console.log(time);
             return moment(time).format("HH:mm");
         },
     },

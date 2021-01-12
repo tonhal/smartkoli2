@@ -18,6 +18,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    <noscript>A böngésződ nem támogatja a JavaScript futtatását!</noscript>
 
     <div id="app">
         <nav id="navigation-bar" class="navbar navbar-expand-lg navbar-light bg-light mb-1">

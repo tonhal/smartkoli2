@@ -35,7 +35,17 @@
                 ></b-time>
             </div>
         </div>
-        <b-button type="submit" block variant="primary mt-2">
+        <b-alert :show="validationErrors.length > 0" variant="danger">
+            <p v-for="error in validationErrors" :key="error" class="mb-0">
+                {{ error }}
+            </p>
+        </b-alert>
+        <b-button
+            :disabled="validationErrors.length > 0"
+            type="submit"
+            block
+            variant="primary mt-2"
+        >
             Hozzáadás
         </b-button>
     </form>
@@ -61,8 +71,60 @@ export default {
         setDefaultTimes() {
             const now = moment();
             this.form.date = now.format("YYYY-MM-DD");
-            this.form.start = `${now.clone().add(1, "hours").format("HH")}:00`;
-            this.form.end = `${now.clone().add(2, "hours").format("HH")}:00`;
+            this.form.start = `${now
+                .clone()
+                .add(1, "hours")
+                .format("HH")}:00:00`;
+            this.form.end = `${now.clone().add(2, "hours").format("HH")}:00:00`;
+        },
+
+        hasFormatError(timeString, isDate) {
+            const timeRegex = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$/;
+            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+            if (isDate) {
+                if (timeString.match(dateRegex)) return false;
+                else return true;
+            } else {
+                if (timeString.match(timeRegex)) return false;
+                else return true;
+            }
+        },
+    },
+
+    computed: {
+        validationErrors() {
+            let errors = [];
+            if (
+                Object.values(this.form).filter((value) => value === null)
+                    .length === 0
+            ) {
+                let start = moment(`${this.form.date} ${this.form.start}`);
+                let end = moment(`${this.form.date} ${this.form.end}`);
+
+                if (this.hasFormatError(this.form.start, false))
+                    errors.push(
+                        "A mosás kezdésének időformátuma nem megfelelő."
+                    );
+                if (this.hasFormatError(this.form.end, false))
+                    errors.push("A mosás végének időformátuma nem megfelelő.");
+                if (this.hasFormatError(this.form.date, true))
+                    errors.push("A dátum időformátuma nem megfelelő.");
+                if (start.hours() < 7)
+                    errors.push("A mosás kezdési időpont túl korai.");
+                if (end.hours() > 22 && this.form.end !== "23:00:00")
+                    errors.push("A mosás végének időpontja túl későn van.");
+                if (start >= end)
+                    errors.push(
+                        "A mosás végének későbbre kell esnie, mint a kezdésnek."
+                    );
+            } else {
+                Object.keys(this.form).forEach((field) => {
+                    if (this.form[field] === null)
+                        errors.push(`A ${field} mező nem lehet üres.`);
+                });
+            }
+
+            return errors;
         },
     },
 
