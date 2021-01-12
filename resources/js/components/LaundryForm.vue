@@ -60,12 +60,15 @@ export default {
                 start: null,
                 end: null,
             },
+            defaultTimesSet: false,
         };
     },
 
     methods: {
         formSubmitted() {
-            this.$emit("addNewLaundry", this.form);
+            if (this.validationErrors.length === 0) {
+                this.$emit("addNewLaundry", this.form);
+            }
         },
 
         setDefaultTimes() {
@@ -76,6 +79,8 @@ export default {
                 .add(1, "hours")
                 .format("HH")}:00:00`;
             this.form.end = `${now.clone().add(2, "hours").format("HH")}:00:00`;
+
+            this.defaultTimesSet = true;
         },
 
         hasFormatError(timeString, isDate) {
@@ -94,12 +99,14 @@ export default {
     computed: {
         validationErrors() {
             let errors = [];
+            if (!this.defaultTimesSet) return errors;
+
             if (
                 Object.values(this.form).filter((value) => value === null)
                     .length === 0
             ) {
-                let start = moment(`${this.form.date} ${this.form.start}`);
-                let end = moment(`${this.form.date} ${this.form.end}`);
+                let start = moment(`${this.form.date}T${this.form.start}`);
+                let end = moment(`${this.form.date}T${this.form.end}`);
 
                 if (this.hasFormatError(this.form.start, false))
                     errors.push(

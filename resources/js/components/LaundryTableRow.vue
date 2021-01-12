@@ -20,7 +20,7 @@
                     >Törlés</b-button
                 >
                 <b-button size="sm" @click="deleteConfirm = false"
-                    >Cancel</b-button
+                    >Mégse</b-button
                 >
             </td>
         </template>

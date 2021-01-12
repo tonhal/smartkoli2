@@ -11,26 +11,42 @@
             </div>
             <div class="col-md-6">
                 <b-card header="Közelgő mosásaim" header-tag="h4" class="h-100">
-                    <table
-                        class="table table-hover table-centered table-striped"
+                    <b-overlay
+                        :show="!eventsLoaded"
+                        spinner-variant="primary"
+                        rounded="sm"
                     >
-                        <thead>
-                            <tr>
-                                <th scope="col">Nap</th>
-                                <th scope="col">Eleje</th>
-                                <th scope="col">Vége</th>
-                                <th scope="col">Törlés</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <LaundryTableRow
-                                v-for="laundry in userLaundries"
-                                :key="laundry.id"
-                                :laundry="laundry"
-                                @laundryDelete="deleteLaundry"
-                            ></LaundryTableRow>
-                        </tbody>
-                    </table>
+                        <table
+                            class="table table-hover table-centered table-striped"
+                        >
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nap</th>
+                                    <th scope="col">Eleje</th>
+                                    <th scope="col">Vége</th>
+                                    <th scope="col">Törlés</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-if="userLaundries.length > 0">
+                                    <LaundryTableRow
+                                        v-for="laundry in userLaundries"
+                                        :key="laundry.id"
+                                        :laundry="laundry"
+                                        @laundryDelete="deleteLaundry"
+                                    ></LaundryTableRow>
+                                </template>
+                                <template v-else>
+                                    <tr>
+                                        <td colspan="4">
+                                            Jelenleg nincs egyetlen közelgő
+                                            mosásod sem.
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </b-overlay>
                 </b-card>
             </div>
         </div>
