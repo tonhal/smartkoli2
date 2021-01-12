@@ -3,50 +3,10 @@
         <div class="row">
             <div class="col-md-6 mb-md-0 mb-3">
                 <b-card header="Új mosás" header-tag="h4">
-                    <form @submit.prevent="addNewLaundry()">
-                        <label for="laundry-date">Állítsd be a dátumot:</label>
-                        <b-form-datepicker
-                            id="laundry-date"
-                            v-model="form.date"
-                            :date-format-options="{
-                                year: 'numeric',
-                                month: 'numeric',
-                                day: 'numeric',
-                                weekday: 'long',
-                            }"
-                            locale="hu"
-                            class="mb-2"
-                        ></b-form-datepicker>
-                        <div class="form-row mt-3">
-                            <div
-                                class="form-group col-sm-6 mb-2 mb-sm-0 text-center"
-                            >
-                                <label for="laundry-start">Mosás kezdete:</label
-                                ><br />
-                                <b-time
-                                    class="border rounded p-2"
-                                    id="laundry-start"
-                                    v-model="form.start"
-                                    locale="hu"
-                                    minutes-step="15"
-                                ></b-time>
-                            </div>
-                            <div class="form-group col-sm-6 text-center">
-                                <label for="laundry-end">Mosás vége:</label
-                                ><br />
-                                <b-time
-                                    class="border rounded p-2"
-                                    id="laundry-end"
-                                    v-model="form.end"
-                                    locale="hu"
-                                    minutes-step="15"
-                                ></b-time>
-                            </div>
-                        </div>
-                        <b-button type="submit" block variant="primary mt-2">
-                            Hozzáadás
-                        </b-button>
-                    </form>
+                    <LaundryForm
+                        @addNewLaundry="addNewLaundry"
+                        ref="laundryForm"
+                    ></LaundryForm>
                 </b-card>
             </div>
             <div class="col-md-6">
@@ -94,13 +54,14 @@
 <script>
 import LaundryCalendar from "../components/LaundryCalendar";
 import LaundryTableRow from "../components/LaundryTableRow";
+import LaundryForm from "../components/LaundryForm";
 import showToast from "../mixins/showToast";
-import moment from "moment";
 
 export default {
     components: {
         LaundryCalendar,
         LaundryTableRow,
+        LaundryForm,
     },
 
     props: ["userId"],
@@ -111,11 +72,6 @@ export default {
         return {
             events: [],
             eventsLoaded: false,
-            form: {
-                date: null,
-                start: null,
-                end: null,
-            },
         };
     },
 
@@ -129,9 +85,9 @@ export default {
             this.eventsLoaded = true;
         },
 
-        addNewLaundry() {
+        addNewLaundry(formData) {
             axios
-                .post("/laundries", { ...this.form })
+                .post("/laundries", { ...formData })
                 .then((response) => {
                     this.events.push(response.data);
 
@@ -141,7 +97,7 @@ export default {
                         "A mosásod hozzáadása sikeres volt."
                     );
 
-                    this.resetForm();
+                    this.$refs.laundryForm.setDefaultTimes();
                 })
                 .catch((error) => {
                     this.showToast(
@@ -166,19 +122,6 @@ export default {
                 "A mosásod törlése sikeres volt."
             );
         },
-
-        setDefaultTimes() {
-            const now = moment();
-            this.form.date = now.format("YYYY-MM-DD");
-            this.form.start = `${now.clone().add(1, "hours").format("HH")}:00`;
-            this.form.end = `${now.clone().add(2, "hours").format("HH")}:00`;
-        },
-
-        resetForm() {
-            Object.keys(this.form).forEach(
-                (field) => (this.form[field] = null)
-            );
-        },
     },
 
     computed: {
@@ -191,7 +134,6 @@ export default {
 
     mounted() {
         this.fetchLaundries();
-        this.setDefaultTimes();
     },
 };
 </script>
