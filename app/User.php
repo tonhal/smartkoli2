@@ -45,4 +45,13 @@ class User extends Authenticatable
         return $this->hasMany('App\Laundry');
 
     }
+
+    /**
+     * Get the guests of this user
+     */
+    public function guests() {
+        
+        return $this->hasMany('App\Guest');
+
+    }
 }
