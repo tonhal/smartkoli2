@@ -6,7 +6,6 @@ import FullCalendar from "@fullcalendar/vue";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import huLocale from "@fullcalendar/core/locales/hu";
 import bootstrapPlugin from "@fullcalendar/bootstrap";
-//import interactionPlugin from "@fullcalendar/interaction";
 
 export default {
     components: {

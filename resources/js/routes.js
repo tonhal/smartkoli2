@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router';
 import Laundries from './pages/Laundries'
+import Guests from './pages/Guests'
 import ExampleComponent from './components/ExampleComponent'
 
 const routes = [
@@ -10,6 +11,10 @@ const routes = [
     {
         path: '/laundries',
         component: Laundries,
+    },
+    {
+        path: '/guests',
+        component: Guests,
     }
 ]
 

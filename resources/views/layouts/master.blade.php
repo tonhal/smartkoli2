@@ -35,6 +35,9 @@
                         <li class="nav-item">
                             <router-link class="nav-link" to="/laundries">Mosások</router-link>
                         </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/guests">Vendégek</router-link>
+                        </li>
                     </ul>
 
                     <ul class="ml-auto navbar-nav">
