@@ -16,8 +16,8 @@ class CreateGuestsTable extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->dateTime('arrival');
-            $table->dateTime('departure');
+            $table->date('arrival');
+            $table->date('departure');
             $table->tinyInteger('capita')->default(1);
             $table->boolean('guestroom');
             $table->text('comment')->nullable();
