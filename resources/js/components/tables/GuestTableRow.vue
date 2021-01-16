@@ -20,8 +20,12 @@
                     variant="danger"
                     size="sm"
                     @click="deleteConfirm = true"
-                    >Törlés</b-button
                 >
+                    <span class="icon">
+                        <i class="fas fa-times"></i>
+                    </span>
+                    <span>Törlés</span>
+                </b-button>
             </td>
         </template>
         <template v-else>

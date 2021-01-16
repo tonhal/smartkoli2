@@ -42,7 +42,8 @@
             block
             variant="primary mt-2"
         >
-            Hozzáadás
+            <span class="icon"> <i class="fas fa-check"></i></span>
+            <span>Hozzáadás</span>
         </b-button>
     </form>
 </template>
