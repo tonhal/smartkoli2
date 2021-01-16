@@ -47,7 +47,6 @@
     </form>
 </template>
 <script>
-import moment from "moment";
 import ValidationErrors from "./FormValidationErrors";
 export default {
     components: {

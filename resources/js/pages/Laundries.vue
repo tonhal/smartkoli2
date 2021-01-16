@@ -72,7 +72,6 @@ import LaundryCalendar from "../components/LaundryCalendar";
 import LaundryTableRow from "../components/LaundryTableRow";
 import LaundryForm from "../components/LaundryForm";
 import showToast from "../mixins/showToast";
-import moment from "moment";
 
 export default {
     components: {

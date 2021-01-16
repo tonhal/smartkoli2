@@ -27,7 +27,6 @@
     </tr>
 </template>
 <script>
-import moment from "moment";
 export default {
     props: ["laundry"],
     data() {
