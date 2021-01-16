@@ -35,11 +35,7 @@
                 ></b-time>
             </div>
         </div>
-        <b-alert :show="validationErrors.length > 0" variant="danger">
-            <p v-for="error in validationErrors" :key="error" class="mb-0">
-                {{ error }}
-            </p>
-        </b-alert>
+        <ValidationErrors :errors="validationErrors"></ValidationErrors>
         <b-button
             :disabled="validationErrors.length > 0"
             type="submit"
@@ -52,7 +48,12 @@
 </template>
 <script>
 import moment from "moment";
+import ValidationErrors from "./FormValidationErrors";
 export default {
+    components: {
+        ValidationErrors,
+    },
+
     data() {
         return {
             form: {
