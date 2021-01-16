@@ -64,7 +64,22 @@ class GuestController extends Controller
             'end' => $guest->departure,
             'userId' => auth()->id(),
             'guestroom' => $guest->guestroom,
+            'capita' => $guest->capita,
             'color' => $guest->guestroom == 1 ? "#38c172" : null,
         ]);
+    }
+
+    public function destroy($id) {
+
+        $guest = Guest::find($id); 
+
+        if($guest->user_id == auth()->id()) {
+            Guest::destroy($id);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'Nincs jogosultságod ennek a vendégfogadásnak a törlésére.'
+            ], 403);
+        }
     }
 }

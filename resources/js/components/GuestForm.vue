@@ -27,7 +27,7 @@
         <b-form-checkbox switch size="md" v-model="form.guestroom" class="my-3"
             >Vendégszoba</b-form-checkbox
         >
-        <label for="comment-input">Vendég adatok, megjegyzések</label>
+        <label for="comment-input">Vendég adatok, megjegyzések:</label>
         <b-form-input
             id="comment-input"
             v-model="form.comment"

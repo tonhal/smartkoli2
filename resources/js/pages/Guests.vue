@@ -9,7 +9,50 @@
                     ></GuestForm>
                 </b-card>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <b-card
+                    header="Közelgő vendégfogadásaim"
+                    header-tag="h4"
+                    class="h-100"
+                >
+                    <b-overlay
+                        :show="!eventsLoaded"
+                        spinner-variant="primary"
+                        rounded="sm"
+                    >
+                        <table
+                            class="table table-hover table-centered table-striped"
+                        >
+                            <thead>
+                                <tr>
+                                    <th scope="col">Érkezés</th>
+                                    <th scope="col">Fő</th>
+                                    <th scope="col">Vendégszoba</th>
+                                    <th scope="col">Törlés</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-if="userGuests.length > 0">
+                                    <GuestTableRow
+                                        v-for="guest in userGuests"
+                                        :key="guest.id"
+                                        :guest="guest"
+                                        @guestDelete="deleteGuest"
+                                    ></GuestTableRow>
+                                </template>
+                                <template v-else>
+                                    <tr>
+                                        <td colspan="4">
+                                            Jelenleg nincs egyetlen közelgő
+                                            vendégfogadásod sem.
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </b-overlay>
+                </b-card>
+            </div>
         </div>
         <div class="row mt-3">
             <div class="col-12">
@@ -29,14 +72,18 @@
 <script>
 import GuestCalendar from "../components/GuestCalendar";
 import GuestForm from "../components/GuestForm";
+import GuestTableRow from "../components/GuestTableRow";
 import showToast from "../mixins/showToast";
 export default {
     components: {
+        GuestTableRow,
         GuestCalendar,
         GuestForm,
     },
 
     mixins: [showToast],
+
+    props: ["userId"],
 
     data() {
         return {
@@ -50,7 +97,7 @@ export default {
             const response = await axios.get("/guests");
 
             this.events = response.data.map(
-                ({ id, arrival, departure, guestroom, user }) => {
+                ({ id, arrival, departure, guestroom, user, capita }) => {
                     return {
                         id,
                         start: arrival,
@@ -58,6 +105,7 @@ export default {
                         title: user.name,
                         userId: user.id,
                         guestroom,
+                        capita,
                         color: guestroom === 1 ? "#38c172" : null,
                     };
                 }
@@ -88,6 +136,40 @@ export default {
                     );
                 });
         },
+
+        deleteGuest(guestId) {
+            axios
+                .delete(`guests/${guestId}`)
+                .then(() => {
+                    this.events.splice(
+                        this.events.findIndex((guest) => guest.id === guestId),
+                        1
+                    );
+
+                    this.showToast(
+                        "success",
+                        "Vendégfogadás törölve!",
+                        "A vendégfogadásod törlése sikeres volt."
+                    );
+                })
+                .catch((error) => {
+                    this.showToast(
+                        "danger",
+                        "Hiba a mosás törlése közben.",
+                        error.response.data.msg
+                    );
+                });
+        },
+    },
+
+    computed: {
+        userGuests() {
+            return this.events.filter(
+                (guest) =>
+                    guest.userId === this.userId &&
+                    moment(guest.start).isSameOrAfter(moment(), "day")
+            );
+        },
     },
 
     mounted() {
@@ -95,3 +177,7 @@ export default {
     },
 };
 </script>
+<style lang="sass">
+.table td, .table th
+    text-align: center
+</style>

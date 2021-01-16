@@ -25,3 +25,4 @@ Route::delete('/laundries/{id}', 'LaundryController@destroy');
 // Guest API routes
 Route::get('/guests', 'GuestController@index');
 Route::post('/guests', 'GuestController@store');
+Route::delete('/guests/{id}', 'GuestController@destroy');
