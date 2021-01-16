@@ -16,36 +16,10 @@
                         spinner-variant="primary"
                         rounded="sm"
                     >
-                        <table
-                            class="table table-hover table-centered table-striped"
-                        >
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nap</th>
-                                    <th scope="col">Eleje</th>
-                                    <th scope="col">Vége</th>
-                                    <th scope="col">Törlés</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template v-if="userLaundries.length > 0">
-                                    <LaundryTableRow
-                                        v-for="laundry in userLaundries"
-                                        :key="laundry.id"
-                                        :laundry="laundry"
-                                        @laundryDelete="deleteLaundry"
-                                    ></LaundryTableRow>
-                                </template>
-                                <template v-else>
-                                    <tr>
-                                        <td colspan="4">
-                                            Jelenleg nincs egyetlen közelgő
-                                            mosásod sem.
-                                        </td>
-                                    </tr>
-                                </template>
-                            </tbody>
-                        </table>
+                        <LaundryTable
+                            :userLaundries="userLaundries"
+                            @laundryDelete="deleteLaundry"
+                        ></LaundryTable>
                     </b-overlay>
                 </b-card>
             </div>
@@ -69,14 +43,14 @@
 </template>
 <script>
 import LaundryCalendar from "../components/LaundryCalendar";
-import LaundryTableRow from "../components/LaundryTableRow";
+import LaundryTable from "../components/tables/LaundryTable";
 import LaundryForm from "../components/LaundryForm";
 import showToast from "../mixins/showToast";
 
 export default {
     components: {
         LaundryCalendar,
-        LaundryTableRow,
+        LaundryTable,
         LaundryForm,
     },
 
@@ -166,7 +140,3 @@ export default {
     },
 };
 </script>
-<style lang="sass">
-.table td, .table th
-    text-align: center
-</style>

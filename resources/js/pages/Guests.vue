@@ -20,36 +20,10 @@
                         spinner-variant="primary"
                         rounded="sm"
                     >
-                        <table
-                            class="table table-hover table-centered table-striped"
-                        >
-                            <thead>
-                                <tr>
-                                    <th scope="col">Érkezés</th>
-                                    <th scope="col">Fő</th>
-                                    <th scope="col">Vendégszoba</th>
-                                    <th scope="col">Törlés</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template v-if="userGuests.length > 0">
-                                    <GuestTableRow
-                                        v-for="guest in userGuests"
-                                        :key="guest.id"
-                                        :guest="guest"
-                                        @guestDelete="deleteGuest"
-                                    ></GuestTableRow>
-                                </template>
-                                <template v-else>
-                                    <tr>
-                                        <td colspan="4">
-                                            Jelenleg nincs egyetlen közelgő
-                                            vendégfogadásod sem.
-                                        </td>
-                                    </tr>
-                                </template>
-                            </tbody>
-                        </table>
+                        <GuestTable
+                            :userGuests="userGuests"
+                            @guestDelete="deleteGuest"
+                        ></GuestTable>
                     </b-overlay>
                 </b-card>
             </div>
@@ -72,11 +46,11 @@
 <script>
 import GuestCalendar from "../components/GuestCalendar";
 import GuestForm from "../components/GuestForm";
-import GuestTableRow from "../components/GuestTableRow";
+import GuestTable from "../components/tables/GuestTable";
 import showToast from "../mixins/showToast";
 export default {
     components: {
-        GuestTableRow,
+        GuestTable,
         GuestCalendar,
         GuestForm,
     },
@@ -177,7 +151,3 @@ export default {
     },
 };
 </script>
-<style lang="sass">
-.table td, .table th
-    text-align: center
-</style>
