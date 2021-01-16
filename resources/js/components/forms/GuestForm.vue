@@ -27,20 +27,32 @@
         <b-form-checkbox switch size="md" v-model="form.guestroom" class="my-3"
             >Vendégszoba</b-form-checkbox
         >
-        <label for="comment-input">Vendég adatok, megjegyzések:</label>
+        <label for="comment-input">Vendég adatai, megjegyzések:</label>
         <b-form-input
             id="comment-input"
+            class="mb-3"
             v-model="form.comment"
             placeholder="Írd ide a vendég(ek) nevét..."
         ></b-form-input>
-        <b-button type="submit" block variant="primary mt-2">
+        <ValidationErrors :errors="validationErrors"></ValidationErrors>
+        <b-button
+            :disabled="validationErrors.length > 0"
+            type="submit"
+            block
+            variant="primary mt-2"
+        >
             <span class="icon"> <i class="fas fa-check"></i></span>
             <span>Hozzáadás</span>
         </b-button>
     </form>
 </template>
 <script>
+import ValidationErrors from "./FormValidationErrors";
 export default {
+    components: {
+        ValidationErrors,
+    },
+
     data() {
         return {
             form: {
@@ -56,6 +68,7 @@ export default {
                 day: "numeric",
                 weekday: "long",
             },
+            defaultInputsSet: false,
         };
     },
 
@@ -71,6 +84,38 @@ export default {
             form.guestroom = true;
             form.capita = 1;
             form.comment = "";
+
+            this.defaultInputsSet = true;
+        },
+
+        hasFormatError(timeString) {
+            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+            if (timeString.match(dateRegex)) return false;
+            else return true;
+        },
+    },
+
+    computed: {
+        validationErrors() {
+            let errors = [];
+
+            if (!this.defaultInputsSet) return errors;
+
+            const { arrival, departure, comment } = this.form;
+
+            if (this.hasFormatError(arrival))
+                errors.push("Az érkezés időformátuma nem megfelelő.");
+            if (this.hasFormatError(departure))
+                errors.push("Az távozás időformátuma nem megfelelő.");
+            if (moment(arrival).isSameOrAfter(departure))
+                errors.push(
+                    "A távozásnak későbbre kell esnie, mint az érkezésnek."
+                );
+            if (comment === null || comment === "")
+                errors.push("Kötelező megadnod a vendég(ek) nevét.");
+
+            return errors;
         },
     },
 
