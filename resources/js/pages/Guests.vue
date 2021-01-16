@@ -45,7 +45,7 @@
 </template>
 <script>
 import GuestCalendar from "../components/GuestCalendar";
-import GuestForm from "../components/GuestForm";
+import GuestForm from "../components/forms/GuestForm";
 import GuestTable from "../components/tables/GuestTable";
 import showToast from "../mixins/showToast";
 export default {

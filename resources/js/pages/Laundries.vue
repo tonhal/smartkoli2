@@ -44,7 +44,7 @@
 <script>
 import LaundryCalendar from "../components/LaundryCalendar";
 import LaundryTable from "../components/tables/LaundryTable";
-import LaundryForm from "../components/LaundryForm";
+import LaundryForm from "../components/forms/LaundryForm";
 import showToast from "../mixins/showToast";
 
 export default {
