@@ -17,6 +17,10 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
+// Laundry API routes
 Route::get('/laundries', 'LaundryController@index');
 Route::post('/laundries', 'LaundryController@store');
 Route::delete('/laundries/{id}', 'LaundryController@destroy');
+
+// Guest API routes
+Route::get('/guests', 'GuestController@index');

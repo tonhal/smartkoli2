@@ -12,7 +12,7 @@ export default {
         FullCalendar,
     },
 
-    //props: ["calendarEvents"],
+    props: ["calendarEvents"],
 
     data() {
         return {
@@ -22,24 +22,8 @@ export default {
                 themeSystem: "bootstrap",
                 initialView: "dayGridMonth",
                 locale: huLocale,
-                events: [
-                    {
-                        title: "asdf",
-                        start: "2020-12-12",
-                        end: "2021-01-04",
-                    },
-                    {
-                        title: "asdf",
-                        start: "2021-01-14",
-                        end: "2021-01-17",
-                        color: "red",
-                    },
-                ],
+                events: [...this.calendarEvents],
                 fixedWeekCount: false,
-                // slotMinTime: "07:00:00",
-                // slotMaxTime: "23:00:00",
-                // allDaySlot: false,
-                // nowIndicator: true,
                 headerToolbar: {
                     start: "today",
                     center: "title",
@@ -52,6 +36,12 @@ export default {
                 //     omitCommas: true,
             },
         };
+    },
+
+    watch: {
+        calendarEvents() {
+            this.calendarOptions.events = [...this.calendarEvents];
+        },
     },
 };
 </script>

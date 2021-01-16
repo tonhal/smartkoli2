@@ -72,6 +72,7 @@ import LaundryCalendar from "../components/LaundryCalendar";
 import LaundryTableRow from "../components/LaundryTableRow";
 import LaundryForm from "../components/LaundryForm";
 import showToast from "../mixins/showToast";
+import moment from "moment";
 
 export default {
     components: {
@@ -154,7 +155,9 @@ export default {
     computed: {
         userLaundries() {
             return this.events.filter(
-                (laundry) => laundry.userId === this.userId
+                (laundry) =>
+                    laundry.userId === this.userId &&
+                    moment(laundry.start).isSameOrAfter(moment(), "day")
             );
         },
     },
