@@ -88,51 +88,48 @@ export default {
             this.eventsLoaded = true;
         },
 
-        addNewGuest(formData) {
-            axios
-                .post("/guests", { ...formData })
-                .then((response) => {
-                    this.events.push(response.data);
+        async addNewGuest(formData) {
+            try {
+                const response = await axios.post("/guests", { ...formData });
 
-                    this.showToast(
-                        "success",
-                        "Vendégéjszaka hozzáadva!",
-                        "Köszönjük, hogy adminisztráltad az érkező vendégedet."
-                    );
+                this.events.push(response.data);
+                this.showToast(
+                    "success",
+                    "Vendégéjszaka hozzáadva!",
+                    "Köszönjük, hogy adminisztráltad az érkező vendégedet."
+                );
 
-                    this.$refs.guestForm.setDefaultInputs();
-                })
-                .catch((error) => {
-                    this.showToast(
-                        "danger",
-                        "Hiba a vendég hozzáadása közben!",
-                        error.response.data.msg
-                    );
-                });
+                this.$refs.guestForm.setDefaultInputs();
+            } catch (error) {
+                this.showToast(
+                    "danger",
+                    "Hiba a vendég hozzáadása közben!",
+                    error.response.data.msg
+                );
+            }
         },
 
-        deleteGuest(guestId) {
-            axios
-                .delete(`guests/${guestId}`)
-                .then(() => {
-                    this.events.splice(
-                        this.events.findIndex((guest) => guest.id === guestId),
-                        1
-                    );
+        async deleteGuest(guestId) {
+            try {
+                await axios.delete(`guests/${guestId}`);
 
-                    this.showToast(
-                        "success",
-                        "Vendégfogadás törölve!",
-                        "A vendégfogadásod törlése sikeres volt."
-                    );
-                })
-                .catch((error) => {
-                    this.showToast(
-                        "danger",
-                        "Hiba a mosás törlése közben.",
-                        error.response.data.msg
-                    );
-                });
+                this.events.splice(
+                    this.events.findIndex((guest) => guest.id === guestId),
+                    1
+                );
+
+                this.showToast(
+                    "success",
+                    "Vendégfogadás törölve!",
+                    "A vendégfogadásod törlése sikeres volt."
+                );
+            } catch (error) {
+                this.showToast(
+                    "danger",
+                    "Hiba a mosás törlése közben.",
+                    error.response.data.msg
+                );
+            }
         },
     },
 

@@ -75,53 +75,50 @@ export default {
             this.eventsLoaded = true;
         },
 
-        addNewLaundry(formData) {
-            axios
-                .post("/laundries", { ...formData })
-                .then((response) => {
-                    this.events.push(response.data);
-
-                    this.showToast(
-                        "success",
-                        "Mosás hozzáadva!",
-                        "A mosásod hozzáadása sikeres volt."
-                    );
-
-                    this.$refs.laundryForm.setDefaultTimes();
-                })
-                .catch((error) => {
-                    this.showToast(
-                        "danger",
-                        "Hiba a mosás hozzáadása közben.",
-                        error.response.data.msg
-                    );
+        async addNewLaundry(formData) {
+            try {
+                const response = await axios.post("/laundries", {
+                    ...formData,
                 });
+
+                this.events.push(response.data);
+                this.showToast(
+                    "success",
+                    "Mosás hozzáadva!",
+                    "A mosásod hozzáadása sikeres volt."
+                );
+            } catch (error) {
+                this.showToast(
+                    "danger",
+                    "Hiba a mosás hozzáadása közben.",
+                    error.response.data.msg
+                );
+            }
         },
 
-        deleteLaundry(laundryId) {
-            axios
-                .delete(`laundries/${laundryId}`)
-                .then(() => {
-                    this.events.splice(
-                        this.events.findIndex(
-                            (laundry) => laundry.id === laundryId
-                        ),
-                        1
-                    );
+        async deleteLaundry(laundryId) {
+            try {
+                await axios.delete(`laundries/${laundryId}`);
 
-                    this.showToast(
-                        "success",
-                        "Mosás törölve!",
-                        "A mosásod törlése sikeres volt."
-                    );
-                })
-                .catch((error) => {
-                    this.showToast(
-                        "danger",
-                        "Hiba a mosás törlése közben.",
-                        error.response.data.msg
-                    );
-                });
+                this.events.splice(
+                    this.events.findIndex(
+                        (laundry) => laundry.id === laundryId
+                    ),
+                    1
+                );
+
+                this.showToast(
+                    "success",
+                    "Mosás törölve!",
+                    "A mosásod törlése sikeres volt."
+                );
+            } catch (error) {
+                this.showToast(
+                    "danger",
+                    "Hiba a mosás törlése közben.",
+                    error.response.data.msg
+                );
+            }
         },
     },
 
