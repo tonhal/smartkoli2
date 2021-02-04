@@ -45,6 +45,7 @@
 import LaundryCalendar from "../components/LaundryCalendar";
 import LaundryTable from "../components/tables/LaundryTable";
 import LaundryForm from "../components/forms/LaundryForm";
+import { getLaundries, postLaundry, deleteLaundry } from "../apis/laundries";
 import showToast from "../mixins/showToast";
 
 export default {
@@ -67,7 +68,7 @@ export default {
 
     methods: {
         async fetchLaundries() {
-            const response = await axios.get("/laundries");
+            const response = await getLaundries();
 
             this.events = response.data.map(({ id, start, end, user }) => {
                 return { id, start, end, title: user.name, userId: user.id };
@@ -77,9 +78,7 @@ export default {
 
         async addNewLaundry(formData) {
             try {
-                const response = await axios.post("/laundries", {
-                    ...formData,
-                });
+                const response = await postLaundry(formData);
 
                 this.events.push(response.data);
                 this.showToast(
@@ -98,7 +97,7 @@ export default {
 
         async deleteLaundry(laundryId) {
             try {
-                await axios.delete(`laundries/${laundryId}`);
+                await deleteLaundry(laundryId);
 
                 this.events.splice(
                     this.events.findIndex(

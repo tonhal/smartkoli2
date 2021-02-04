@@ -48,6 +48,7 @@ import GuestCalendar from "../components/GuestCalendar";
 import GuestForm from "../components/forms/GuestForm";
 import GuestTable from "../components/tables/GuestTable";
 import showToast from "../mixins/showToast";
+import { getGuests, postGuest, deleteGuest } from "../apis/guests";
 export default {
     components: {
         GuestTable,
@@ -68,7 +69,7 @@ export default {
 
     methods: {
         async fetchGuests() {
-            const response = await axios.get("/guests");
+            const response = await getGuests();
 
             this.events = response.data.map(
                 ({ id, arrival, departure, guestroom, user, capita }) => {
@@ -90,7 +91,7 @@ export default {
 
         async addNewGuest(formData) {
             try {
-                const response = await axios.post("/guests", { ...formData });
+                const response = await postGuest(formData);
 
                 this.events.push(response.data);
                 this.showToast(
@@ -111,7 +112,7 @@ export default {
 
         async deleteGuest(guestId) {
             try {
-                await axios.delete(`guests/${guestId}`);
+                await deleteGuest(guestId);
 
                 this.events.splice(
                     this.events.findIndex((guest) => guest.id === guestId),
