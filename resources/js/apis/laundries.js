@@ -14,7 +14,7 @@ export const postLaundry = async (data) => {
 
 export const deleteLaundry = async (id) => {
 
-    const response = axios.delete(`laundries/${id}`);
+    const response = axios.delete(`/laundries/${id}`);
 
     return response;
 }
