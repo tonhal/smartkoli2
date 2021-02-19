@@ -53,7 +53,8 @@ export default {
     },
 };
 </script>
-<style lang="sass" scoped>
-#day-cell
-    font-weight: bold
+<style lang="scss" scoped>
+#day-cell {
+    font-weight: bold;
+}
 </style>

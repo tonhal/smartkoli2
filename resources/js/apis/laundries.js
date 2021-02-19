@@ -1,20 +1,7 @@
-export const getLaundries = async () => {
+const getLaundries = () => axios.get("/laundries");
 
-    const response = await axios.get("/laundries");
+const postLaundry = data => axios.post("/laundries", { ...data });
 
-    return response;
-}
+const deleteLaundry = id => axios.delete(`/laundries/${id}`);
 
-export const postLaundry = async (data) => {
-
-    const response = await axios.post("/laundries", { ...data });
-
-    return response;
-}
-
-export const deleteLaundry = async (id) => {
-
-    const response = axios.delete(`/laundries/${id}`);
-
-    return response;
-}
+export { getLaundries, postLaundry, deleteLaundry };

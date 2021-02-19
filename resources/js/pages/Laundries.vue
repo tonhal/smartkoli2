@@ -86,6 +86,8 @@ export default {
                     "Mosás hozzáadva!",
                     "A mosásod hozzáadása sikeres volt."
                 );
+
+                this.$refs.laundryForm.setDefaultTimes();
             } catch (error) {
                 this.showToast(
                     "danger",

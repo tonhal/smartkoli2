@@ -37,7 +37,9 @@ export default {
     props: ["userLaundries"],
 };
 </script>
-<style lang="sass">
-.table td, .table th
-    text-align: center
+<style lang="scss">
+.table td,
+.table th {
+    text-align: center;
+}
 </style>

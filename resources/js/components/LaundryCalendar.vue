@@ -22,7 +22,7 @@ export default {
                 themeSystem: "bootstrap",
                 initialView: "timeGridWeek",
                 locale: huLocale,
-                events: this.calendarEvents,
+                events: [...this.calendarEvents],
                 slotMinTime: "07:00:00",
                 slotMaxTime: "23:00:00",
                 allDaySlot: false,
