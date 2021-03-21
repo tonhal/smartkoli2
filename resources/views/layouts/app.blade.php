@@ -18,13 +18,30 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        body { 
+            background-attachment: fixed;
+            background-clip: border-box;
+            background-position: top left;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+            margin: 0;
+            background-attachment: fixed;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img id="mandak-logo" src='{{ asset("images/kolilogok/szoveg_nagy.png") }}'>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -76,5 +93,12 @@
             @yield('content')
         </main>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var random = Math.floor((Math.random() * 9) + 1);
+            document.body.style.backgroundImage = "url('../images/backgrounds/bg" + random + ".jpg')";
+        });
+    </script>
 </body>
 </html>

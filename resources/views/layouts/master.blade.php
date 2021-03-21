@@ -23,12 +23,14 @@
     <div id="app">
         <nav id="navigation-bar" class="navbar navbar-expand-lg navbar-light bg-light mb-1">
             <div class="container">
-                <router-link class="navbar-brand" to="/" exact-active-class="brand-is-active">SmartKoli</router-link>
+                <router-link class="navbar-brand mb-2" to="/" exact-active-class="brand-is-active">
+                    <img id="mandak-logo" src='{{ asset("images/kolilogok/szoveg_nagy.png") }}'>
+                </router-link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="mr-auto navbar-nav">
+                    <ul id="menu-items" class="mr-auto navbar-nav">
                         <li class="nav-item">
                             <router-link class="nav-link" id="proba" to="/">Kezdőlap</router-link>
                         </li>
@@ -43,7 +45,7 @@
                     <ul class="ml-auto navbar-nav">
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <span class='icon'><i class="fas fa-user"></i></span><span>{{ Auth::user()->name }}</span><span class="caret"></span>
+                                <span class='icon mr-2'><i class="fas fa-user"></i></span><span>{{ Auth::user()->name }}</span><span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
